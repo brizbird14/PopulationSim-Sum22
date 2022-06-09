@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class EnviroControl : MonoBehaviour
 {
+    RateControl rateScript;
+
     public void Start() {
         // Set starting light intensity / brightness
         lightSlider.value = 0.5f;
@@ -20,6 +22,7 @@ public class EnviroControl : MonoBehaviour
     [SerializeField] Slider lightSlider;
     public void UpdateLight() {
         sunlight.intensity = lightSlider.value + 0.25f;
+        rateScript.UpdateCGrowth(lightSlider.value, pondOn);
     }
 
     // Controlling pond appearance
@@ -35,5 +38,6 @@ public class EnviroControl : MonoBehaviour
             pond.SetActive(true);
             pondOn = true;
         }
+        rateScript.UpdateCGrowth(lightSlider.value, pondOn);
     }
 }
