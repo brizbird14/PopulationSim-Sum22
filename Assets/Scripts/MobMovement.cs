@@ -11,7 +11,7 @@ public class MobMovement : MonoBehaviour
     float moveDirec; // Randomizes movement direction
 
     void Start() {
-        changeDirection();
+        ChangeDirection();
         timeToTurn = Time.time + Random.Range(1.5f, 5.0f);
         turnStop = false;
     }
@@ -20,7 +20,7 @@ public class MobMovement : MonoBehaviour
     void Update()
     {
         if (Time.time >= timeToTurn) {
-            changeDirection();
+            ChangeDirection();
             timeToTurn = Time.time + Random.Range(1.5f, 5.0f);
         }
 
@@ -38,7 +38,7 @@ public class MobMovement : MonoBehaviour
         }
     }
 
-    void changeDirection () {
+    void ChangeDirection () {
         Debug.Log("Changing direction");
         moveDirec = Random.Range(0.0f, 4.0f);
     }
