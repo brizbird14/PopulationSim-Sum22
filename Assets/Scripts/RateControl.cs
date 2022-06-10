@@ -31,11 +31,8 @@ public class RateControl : MonoBehaviour
         spawn.UpdatePopSize(1, CalcDM(fPop, mPop));
         spawn.UpdatePopSize(2, CalcDC(cPop, fPop));
         spawn.UpdatePopSize(3, CalcDF(cPop, fPop));
-
+        // in SpawnControl, UpdatePopSize() calls SpawnDespawn()
         // If d_/dt is pos, spawn; else, despawn -- for each population
-        spawn.SpawnDespawn(1, CalcDM(fPop, mPop));
-        spawn.SpawnDespawn(2, CalcDC(cPop, fPop));
-        spawn.SpawnDespawn(3, CalcDF(cPop, fPop));
     }
 
     public void UpdateCGrowth(float lightVal, bool pond) {

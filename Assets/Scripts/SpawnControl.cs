@@ -14,7 +14,7 @@ public class SpawnControl : MonoBehaviour
     //[SerializeField] float foxX, foxZ;
 
     // Number of things, tracked at spawn and used to calc rates
-    int numShroom, numChick, numFox;
+    [SerializeField] int numShroom, numChick, numFox;
 
     // Growth rate of things (i.e. how many to spawn each second)
     int growthShroom, growthChick, growthFox;
@@ -22,10 +22,14 @@ public class SpawnControl : MonoBehaviour
     [SerializeField] float spawnerWait;
 
     void Start() {
-        // Start each population at size 0
-        numShroom = 0;
-        numChick = 0;
-        numFox = 0;
+        // Start each population at 3
+        numShroom = 5;
+        numChick = 5;
+        numFox = 5;
+
+        for (int x = 0; x < 3; x++) {
+            Instantiate(mobChick, new Vector3(Random.Range(-3.5f, 3.5f), -0.3f, Random.Range(-0.5f, -6.0f)), Quaternion.identity);
+        }
     }
 
     //FOR TESTING SPAWN AND DESPAWN
@@ -33,11 +37,11 @@ public class SpawnControl : MonoBehaviour
         #if UNITY_EDITOR
             if (Input.GetKeyDown(KeyCode.S)) {
                 //Spawn
-                StartCoroutine(SpawnDespawnCoroutine(1, 2));
+                StartCoroutine(SpawnDespawnCoroutine(3, 2));
             }
             if (Input.GetKeyDown(KeyCode.D)) {
                 //Despawn
-                StartCoroutine(SpawnDespawnCoroutine(1, -2));
+                StartCoroutine(SpawnDespawnCoroutine(3, -2));
             }
         #endif
     }
@@ -59,6 +63,7 @@ public class SpawnControl : MonoBehaviour
                 numFox += growthRate;
                 break;
         }
+        SpawnDespawn(mob, growthRate);
     }
 
     public int ReturnPopSize(int mob) {
@@ -81,16 +86,44 @@ public class SpawnControl : MonoBehaviour
     }
 
     IEnumerator SpawnDespawnCoroutine(int mob, int popIncr) {
+        //Debug.Log("Coroutine reached");
         switch(mob) {
             case 1:
                 if (popIncr >= 0) {
                     for (int i = 0; i < popIncr; i++) {
-                        Instantiate(mobShroom, new Vector3(Random.Range(-4.0f, 4.0f), -0.67f, Random.Range(-0.6f, -6.5f) ), Quaternion.identity);
+                        Instantiate(mobShroom, new Vector3(Random.Range(-3.5f, 3.5f), -0.3f, Random.Range(-0.5f, -6.0f)), Quaternion.identity);
                         yield return new WaitForSeconds(spawnerWait);
                     }
                 } else { // population is decreasing
                     for (int j = 0; j > popIncr; j--) {
                         Destroy(GameObject.FindWithTag("MobShroom"));
+                        yield return new WaitForSeconds(spawnerWait);
+                    }
+                }
+                break;
+            case 2:
+                if (popIncr >= 0) {
+                    for (int i = 0; i < popIncr; i++) {
+                        //Debug.Log("SpawnDespawnCoroutine chicken");
+                        Instantiate(mobChick, new Vector3(Random.Range(-3.5f, 3.5f), -0.3f, Random.Range(-0.5f, -6.0f)), Quaternion.identity);
+                        yield return new WaitForSeconds(spawnerWait);
+                    }
+                } else { // population is decreasing
+                    for (int j = 0; j > popIncr; j--) {
+                        Destroy(GameObject.FindWithTag("MobChick"));
+                        yield return new WaitForSeconds(spawnerWait);
+                    }
+                }
+                break;
+            case 3:
+                if (popIncr >= 0) {
+                    for (int i = 0; i < popIncr; i++) {
+                        Instantiate(mobFox, new Vector3(Random.Range(-3.5f, 3.5f), -0.3f, Random.Range(-0.5f, -6.0f)), Quaternion.identity);
+                        yield return new WaitForSeconds(spawnerWait);
+                    }
+                } else { // population is decreasing
+                    for (int j = 0; j > popIncr; j--) {
+                        Destroy(GameObject.FindWithTag("MobFox"));
                         yield return new WaitForSeconds(spawnerWait);
                     }
                 }

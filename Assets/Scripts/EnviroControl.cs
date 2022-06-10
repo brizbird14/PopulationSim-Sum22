@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class EnviroControl : MonoBehaviour
 {
-    RateControl rateScript;
+    [SerializeField] RateControl rateScript;
 
     public void Start() {
         // Set starting light intensity / brightness

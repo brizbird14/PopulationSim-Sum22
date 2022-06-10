@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Environment
   - MobShroom
+  - MobChick
+  - MobFox
   layers:
   - Default
   - TransparentFX

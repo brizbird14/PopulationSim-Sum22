@@ -25,7 +25,7 @@ public class MobMovement : MonoBehaviour
         }
 
         if (turnStop) {
-            Debug.Log("Stopping");
+            //Debug.Log("Stopping");
             this.gameObject.transform.position = this.gameObject.transform.position;
         } else if (moveDirec < 1.0f) {
             this.gameObject.transform.position += this.gameObject.transform.up * Time.deltaTime * mobSpeed;
@@ -39,7 +39,7 @@ public class MobMovement : MonoBehaviour
     }
 
     void ChangeDirection () {
-        Debug.Log("Changing direction");
+        //Debug.Log("Changing direction");
         moveDirec = Random.Range(0.0f, 4.0f);
     }
 
@@ -47,7 +47,7 @@ public class MobMovement : MonoBehaviour
         // Upon hitting walls
         turnStop = true;
         if (col.gameObject.tag == "Environment") {
-            Debug.Log("Hit wall");
+            //Debug.Log("Hit wall");
             // Rotate away from wall
             this.gameObject.transform.Rotate(0.0f, Random.Range(-100.0f, 100.0f), 0.0f, Space.Self);
         }
