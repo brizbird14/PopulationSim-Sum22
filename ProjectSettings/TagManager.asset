@@ -8,6 +8,7 @@ TagManager:
   - MobShroom
   - MobChick
   - MobFox
+  - RateControl
   layers:
   - Default
   - TransparentFX

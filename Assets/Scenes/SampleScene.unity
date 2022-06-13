@@ -1272,10 +1272,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawn: {fileID: 922253487}
-  cGrowth: 0
-  fGrowth: 5
-  mGrowth: 5
-  mDeath: 5
+  enviro: {fileID: 983902713}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0

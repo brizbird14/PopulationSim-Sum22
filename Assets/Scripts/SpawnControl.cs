@@ -25,9 +25,9 @@ public class SpawnControl : MonoBehaviour
 
     void Start() {
         // Start each population at 3
-        numShroom = 3;
-        numChick = 3;
-        numFox = 3;
+        numShroom = 25;
+        numChick = 50;
+        numFox = 50;
 
         for (int x = 0; x < 3; x++) {
             Instantiate(mobChick, new Vector3(Random.Range(-3.5f, 3.5f), -0.3f, Random.Range(-0.5f, -6.0f)), Quaternion.identity);
@@ -66,7 +66,7 @@ public class SpawnControl : MonoBehaviour
                 numShroom += growthRate;
                 break;
             case 2:
-                Debug.Log("Chicken GR " + growthRate);
+                //Debug.Log("Chicken GR " + growthRate);
                 growthChick = growthRate;
                 numChick += growthRate;
                 break;

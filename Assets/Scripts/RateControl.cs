@@ -7,6 +7,7 @@ public class RateControl : MonoBehaviour
     // Growth rates of C - chicken, F - fox, M - mushroom
     float dCdt, dFdt, dMdt;
     [SerializeField] SpawnControl spawn;
+    [SerializeField] EnviroControl enviro; // Just for getting initials
     int cPop, fPop, mPop;
 
     // CONSTANTS for Growth and Death such that:
@@ -18,7 +19,12 @@ public class RateControl : MonoBehaviour
         -- cGrowth = fGrowth and fDeath = mGrowth, only M dies indep. b/c no predator
     */
     // NOTE: cGrowth controlled by EnviroControl (user input)
-    [SerializeField] float cGrowth, fGrowth, mGrowth, mDeath;
+    float cGrowth, fGrowth, mGrowth, mDeath;
+
+    void OnEnable() {
+        Debug.Log("Is enabled");
+        UpdateCGrowth(enviro.GetLightInitial(), enviro.GetPondInitial());
+    }
 
     void FixedUpdate() {
         // Edit >> Project Settings >> Time -- Fixed time step set to 1 sec.
@@ -38,24 +44,32 @@ public class RateControl : MonoBehaviour
     public void UpdateCGrowth(float lightVal, bool pond) {
         // Update cGrowth based on environmental factors
         // lightVal multiplier of 50, +20 if pond on
+        Debug.Log("SETTING CGROWTH");
+        Debug.Log(lightVal);
+        Debug.Log(pond);
         cGrowth = (lightVal * 50.0f);
         if (pond) {
             cGrowth += 20.0f;
         }
         cGrowth = cGrowth / 10;
+
+        // Update other coefs. to max at 50
+        fGrowth = cGrowth/50;
+        mGrowth = cGrowth;
+        mDeath = cGrowth*2; // HMM
     }
 
     int CalcDC(int chickPop, int foxPop) {
         // Passed back to spawn
         dCdt = (cGrowth * chickPop) - (fGrowth * chickPop * foxPop);
-        return Mathf.FloorToInt(dCdt);
+        return Mathf.RoundToInt(dCdt);
     }
     int CalcDF(int chickPop, int foxPop) {
         dFdt = (fGrowth * chickPop * foxPop) - (mGrowth * foxPop);
-        return Mathf.FloorToInt(dFdt);
+        return Mathf.RoundToInt(dFdt);
     }
     int CalcDM(int foxPop, int mushPop) {
         dMdt = (mGrowth * foxPop) - (mDeath * mushPop);
-        return Mathf.FloorToInt(dMdt);
+        return Mathf.RoundToInt(dMdt);
     }
 }
