@@ -21,15 +21,26 @@ public class SpawnControl : MonoBehaviour
 
     [SerializeField] float spawnerWait;
 
+    [SerializeField] RateControl rateController; // ONLY ref when turning on in beginning
+
     void Start() {
         // Start each population at 3
-        numShroom = 5;
-        numChick = 5;
-        numFox = 5;
+        numShroom = 3;
+        numChick = 3;
+        numFox = 3;
 
         for (int x = 0; x < 3; x++) {
             Instantiate(mobChick, new Vector3(Random.Range(-3.5f, 3.5f), -0.3f, Random.Range(-0.5f, -6.0f)), Quaternion.identity);
+            Instantiate(mobFox, new Vector3(Random.Range(-3.5f, 3.5f), -0.3f, Random.Range(-0.5f, -6.0f)), Quaternion.identity);
+            Instantiate(mobShroom, new Vector3(Random.Range(-3.5f, 3.5f), -0.3f, Random.Range(-0.5f, -6.0f)), Quaternion.identity);
         }
+
+        StartCoroutine(WaitRateController());
+    }
+
+    IEnumerator WaitRateController() {
+        yield return new WaitForSeconds(1.0f);
+        rateController.enabled = true;
     }
 
     //FOR TESTING SPAWN AND DESPAWN
@@ -55,6 +66,7 @@ public class SpawnControl : MonoBehaviour
                 numShroom += growthRate;
                 break;
             case 2:
+                Debug.Log("Chicken GR " + growthRate);
                 growthChick = growthRate;
                 numChick += growthRate;
                 break;

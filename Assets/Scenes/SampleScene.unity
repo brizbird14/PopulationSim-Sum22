@@ -1242,7 +1242,8 @@ MonoBehaviour:
   numShroom: 0
   numChick: 0
   numFox: 0
-  spawnerWait: 0.02
+  spawnerWait: 0.1
+  rateController: {fileID: 922253489}
 --- !u!4 &922253488
 Transform:
   m_ObjectHideFlags: 0
@@ -1265,16 +1266,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 922253486}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 32a84d868bb782f449a88d9ca8d23a15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   spawn: {fileID: 922253487}
   cGrowth: 0
-  fGrowth: 10
-  mGrowth: 10
-  mDeath: 7
+  fGrowth: 5
+  mGrowth: 5
+  mDeath: 5
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0

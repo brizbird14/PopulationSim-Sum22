@@ -42,6 +42,7 @@ public class RateControl : MonoBehaviour
         if (pond) {
             cGrowth += 20.0f;
         }
+        cGrowth = cGrowth / 10;
     }
 
     int CalcDC(int chickPop, int foxPop) {
