@@ -26,7 +26,7 @@ public class EnviroControl : MonoBehaviour
     [SerializeField] Slider lightSlider;
     public void UpdateLight() {
         sunlight.intensity = lightSlider.value + 0.25f;
-        //rateScript.UpdateCGrowth(lightSlider.value, pondOn);
+        rateScript.UpdateCGrowth(lightSlider.value, pondOn);
     }
 
     // Controlling pond appearance

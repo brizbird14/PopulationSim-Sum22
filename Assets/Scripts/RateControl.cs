@@ -22,7 +22,7 @@ public class RateControl : MonoBehaviour
     float cGrowth, fGrowth, mGrowth, mDeath;
 
     void OnEnable() {
-        Debug.Log("Is enabled");
+        //Debug.Log("Is enabled");
         UpdateCGrowth(enviro.GetLightInitial(), enviro.GetPondInitial());
     }
 
@@ -44,9 +44,9 @@ public class RateControl : MonoBehaviour
     public void UpdateCGrowth(float lightVal, bool pond) {
         // Update cGrowth based on environmental factors
         // lightVal multiplier of 50, +20 if pond on
-        Debug.Log("SETTING CGROWTH");
-        Debug.Log(lightVal);
-        Debug.Log(pond);
+        //Debug.Log("SETTING CGROWTH");
+        //Debug.Log(lightVal);
+        //Debug.Log(pond);
         cGrowth = (lightVal * 50.0f);
         if (pond) {
             cGrowth += 20.0f;
