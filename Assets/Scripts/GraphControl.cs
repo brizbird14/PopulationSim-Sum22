@@ -12,38 +12,46 @@ public class GraphControl : MonoBehaviour
     int cPop, fPop;
     float newX, newY;
 
+    [SerializeField] float xMin, xMax, yMin, yMax, zCoord; // coords, to avoid hard-coding
+
+    bool waitUpdate;
+
     void Start()
     {
-        rateMarker.transform.localPosition = new Vector3(-0.28f, -0.14f, -0.127f);
+        rateMarker.transform.localPosition = new Vector3(xMin, yMin, zCoord);
+        waitUpdate = false;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        Debug.Log("Graph is reached");
+        if (!waitUpdate) {
+            waitUpdate = true;
+            return;
+        }
+
         cPop = spawn.ReturnPopSize(2);
         fPop = spawn.ReturnPopSize(3);
 
         // MAX 100
-        // for x, width is 0.285 / 100 = 0.00285 per c
-        // for y, height is 0.32 / 100 = 0.0032 per f
+        // Divide diff between min and max by 100 for coord diff. for ea. C or F
 
         // move C
         if (cPop < 0) {
-            newX = -0.28f;
+            newX = xMin;
         } else if (cPop > 100) {
-            newX = 0.05f;
+            newX = xMax;
         } else {
-            newX = -0.028f + 0.00285f*cPop;
+            newX = xMin + (xMax - xMin)*cPop/100;
         }
         // move F
         if (fPop < 0) {
-            newY = -0.14f;
+            newY = yMin;
         } else if (fPop > 100) {
-            newY = 0.18f;
+            newY = yMax;
         } else {
-            newY = -0.14f + 0.0032f*fPop;
+            newY = yMin + (yMax - yMin)*fPop/100;
         }
-        rateMarker.transform.localPosition = new Vector3(newX, newY, -0.127f);
+        rateMarker.transform.localPosition = new Vector3(newX, newY, zCoord);
     }
 }
