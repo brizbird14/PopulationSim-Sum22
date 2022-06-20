@@ -19,6 +19,7 @@ public class EnviroControl : MonoBehaviour
         // Set pond activity
         pond.SetActive(true);
         pondOn = true;
+        isPaused = false;
     }
 
     // Controlling local light intensity
@@ -51,5 +52,16 @@ public class EnviroControl : MonoBehaviour
     }
     public bool GetPondInitial() {
         return pondOn;
+    }
+
+    bool isPaused;
+    public void TogglePause() {
+        if (isPaused) {
+            isPaused = false;
+            rateScript.PauseUnpause(false);
+        } else {
+            isPaused = true;
+            rateScript.PauseUnpause(true);
+        }
     }
 }

@@ -9,6 +9,7 @@ public class RateControl : MonoBehaviour
     [SerializeField] SpawnControl spawn;
     [SerializeField] EnviroControl enviro; // Just for getting initials
     int cPop, fPop, mPop;
+    bool enviroPaused;
 
     // CONSTANTS for Growth and Death such that:
     /*
@@ -27,18 +28,20 @@ public class RateControl : MonoBehaviour
     }
 
     void FixedUpdate() {
-        // Edit >> Project Settings >> Time -- Fixed time step set to 1 sec.
-        // Calculate the growth rate
-        mPop = spawn.ReturnPopSize(1);
-        cPop = spawn.ReturnPopSize(2);
-        fPop = spawn.ReturnPopSize(3);
+        if (!enviroPaused) {
+            // Edit >> Project Settings >> Time -- Fixed time step set to 1 sec.
+            // Calculate the growth rate
+            mPop = spawn.ReturnPopSize(1);
+            cPop = spawn.ReturnPopSize(2);
+            fPop = spawn.ReturnPopSize(3);
 
-        // Update population size, floor to last integer
-        spawn.UpdatePopSize(1, CalcDM(fPop, mPop));
-        spawn.UpdatePopSize(2, CalcDC(cPop, fPop));
-        spawn.UpdatePopSize(3, CalcDF(cPop, fPop));
-        // in SpawnControl, UpdatePopSize() calls SpawnDespawn()
-        // If d_/dt is pos, spawn; else, despawn -- for each population
+            // Update population size, floor to last integer
+            spawn.UpdatePopSize(1, CalcDM(fPop, mPop));
+            spawn.UpdatePopSize(2, CalcDC(cPop, fPop));
+            spawn.UpdatePopSize(3, CalcDF(cPop, fPop));
+            // in SpawnControl, UpdatePopSize() calls SpawnDespawn()
+            // If d_/dt is pos, spawn; else, despawn -- for each population
+        }
     }
 
     public void UpdateCGrowth(float lightVal, bool pond) {
@@ -71,5 +74,9 @@ public class RateControl : MonoBehaviour
     int CalcDM(int foxPop, int mushPop) {
         dMdt = (mGrowth * foxPop) - (mDeath * mushPop);
         return Mathf.RoundToInt(dMdt);
+    }
+
+    public void PauseUnpause (bool pause) {
+        enviroPaused = pause;
     }
 }
