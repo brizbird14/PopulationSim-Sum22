@@ -19,10 +19,12 @@ The chicken and fox populations also depend on environmental factors like light 
 
 The first of the template equations discusses the relationship between two co-existing populations that demonstrate exponential growth, while the other relates a simple predator-prey relationship, where the shared term is positive for one population (predator) and negative for the other (prey). Because I wanted to include both a population limit/plateau and a predator-prey relationship, it was necessary to combine the two.
 
-![Example of competing species equation](ReadMePics/rmPic_CompetingSpeciesFormulas.png)
+![Example of competing species equations](https://user-images.githubusercontent.com/69176399/175115114-611f10ba-ac1c-4ba3-876e-87624f639491.png)
+
 This is an example of the rate equations for two competing species, taken from the textbook of the aforementioned math class. Here, *x* and *y* represent the competing populations, and constants *K* and *M* represent their population caps, respectively.
 
-![Example of predator-prey species equation](ReadMePics/rmPc_PredPreyFormulas.png)
+![Example of predator-prey species equations](https://user-images.githubusercontent.com/69176399/175114881-015c5eaa-bb48-4974-a4fb-5cd32162a309.png)
+
 This is an example of the rate equations for species in a predator-prey relationship. Here, *x* represents the prey population, since the shared term (containing *xy*) is negative, while *y* is the predator pouplation and its rate equation contains a positive shared term.
 
 One current issue encountered here is that, because the predator (Fox) population has a positive shared term, it can exceed the population cap *K* and can thus increase infinitely.
