@@ -1,42 +1,43 @@
 # PopulationSim-Sum22
 
-Link to online build:
+[*HEADER IMAGE HERE*]
 
-#### Population models with differential equations
+Link to online build: [*INSERT LINK WHEN BROWSER VERSION BUILT*]
 
-In a recent maths course that I took at Rutgers University, we discussed how populations can be modeled with differential equations. During this course I completed simple coding assignments in MATLAB to model healthy, infected, and deceased populations in a “disease” scenario.
+#### Populations with differential equations
 
-To expand on the topics discussed in class, I made a population simulation that models the predator-prey relationship between two populations, chickens and foxes, and their relationship with environmental variables that the user can control.
+In a recent mathematics course that I attended at Rutgers University, we discussed population models as a potential application for systems of differential equations. The goals of this project were to simulate interacting populations based off of models studied in class, and to further familiarize myself with C# and the Unity API.
 
-This project was completed in Unity 2021.3.4f1 in C#. All 3D assets were modeled in Blender, and all 2D and UI assets were created in Procreate.
+Tools used:
+* Unity (version 2021.3.4f1)
+* Blender for 3D visual assets
+* Procreate for 2D visual assets
 
 
-#### Population simulation design
+#### Simulation design
 
-The chicken and fox populations also depend on environmental factors like light level, water availability, and the presence of decomposers (mushrooms), some of which can be controlled by the user. It uses the following equation, which is a combination of the two following equations discussed in class.
+The simulation features 3 populations: chickens, foxes, and mushrooms. The chicken and fox are representative of a **predator-prey relationship**, where the *chicken's death rrate realtes to the fox's birth rate.* The chicken's birth rate is influenced by user-controlled environmental factors, while the fox's death rate decides the presence of decomposers (mushrooms).
+The populations are related by the equations below, and the calculations to derive them may be found [*FILE LOC WHEN MATH CALCS POSTED*]
 
-[*Fill in later, planning to adjust soon*]
+[*INSERT FINAL EQ PICS HERE, along with small caption below explaining variables*]
 
-The first of the template equations discusses the relationship between two co-existing populations that demonstrate exponential growth, while the other relates a simple predator-prey relationship, where the shared term is positive for one population (predator) and negative for the other (prey). Because I wanted to include both a population limit/plateau and a predator-prey relationship, it was necessary to combine the two.
+#### Code and Visuals
 
-![Example of competing species equations](https://user-images.githubusercontent.com/69176399/175115114-611f10ba-ac1c-4ba3-876e-87624f639491.png)
+The above equations were translated into code, and is used to re-calculate populations at each interval of 0.2sec using population counts from the previous interval. The "Spawn" in the game instantiates and destroys game objects that visually represent the number of each mob present, depending on whether their population is increasing or decreasing.
+The user can view information about the populations and interact with the simulation using UI elements:
+* User control over environmental factors that influence chicken's birth rate (light levels, water presence)
+* Pause/start button that pauses simulation
+* Access to an info tab with animations and pop-up text that explain the simulation
+* Graph that shows population counts of chickens (C) and foxes (F)
 
-This is an example of the rate equations for two competing species, taken from the textbook of the aforementioned math class. Here, *x* and *y* represent the competing populations, and constants *K* and *M* represent their population caps, respectively.
-
-![Example of predator-prey species equations](https://user-images.githubusercontent.com/69176399/175114881-015c5eaa-bb48-4974-a4fb-5cd32162a309.png)
-
-This is an example of the rate equations for species in a predator-prey relationship. Here, *x* represents the prey population, since the shared term (containing *xy*) is negative, while *y* is the predator pouplation and its rate equation contains a positive shared term.
-
-One current issue encountered here is that, because the predator (Fox) population has a positive shared term, it can exceed the population cap *K* and can thus increase infinitely.
-
-The user has access to a light level (slider) and a pond for water availability (on/off button), which indirectly influence the chicken population. They are also able to view an info screen, which explains the simulation, and a graph that shows the current population counts.
+#### What I learned
+* Using Unity-specific tools such as Canvas and TextMeshPro to create interactable UI
+* Passing values between game objects by creating instances of custom classes
+* 
 
 #### Future improvements
-
-* Improving formulas to cap fox population
-* Mob movement
-* Graph dynamic movement between points and scaling
-* Touching up UI and 3D assets
+* Adjust math to cap fox population
+* Allow user to change speed of simulation
 
 #### References
 
