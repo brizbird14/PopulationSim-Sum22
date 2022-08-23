@@ -12,7 +12,7 @@ public class EnviroControl : MonoBehaviour
         //lightSlider.value = 0.5f;
 
         // FOR TESTING MAX
-        lightSlider.value = 1.0f;
+        lightSlider.value = 0.5f;
 
         sunlight.intensity = lightSlider.value + 0.25f;
 

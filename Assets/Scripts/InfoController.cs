@@ -5,18 +5,33 @@ using TMPro;
 
 public class InfoController : MonoBehaviour
 {
+
+    /*
+    The order and timing of things happening is fairly hard-coded
+    based on how I think it looks best with the pop-up text
+    */
+
     [SerializeField] string introMsg, controlMsg, guideMsg;
     public char[] intro, control, guide;
     [SerializeField] float betweenSentencePause, betweenLettersPause;
     Time startPrint, startPause;
-    bool infoStart;
+    [SerializeField] bool infoStart;
     
     [SerializeField] GameObject darkOverlay, background;
 
     [SerializeField] TextMeshProUGUI infoText;
 
+    IEnumerator printCoroutine;
+    bool killPrint; // if true, stops print in coroutine
+
+    // Sprites that are displayed with each slide
+    [SerializeField] SpriteRenderer foxSprite, chickenSprite, mushroomSprite;
+    [SerializeField] SpriteRenderer sunsliderSprite, pondbuttonSprite;
+    [SerializeField] SpriteRenderer fkcSprite;
+
     void Start() {
         infoStart = false;
+        killPrint = false;
         intro = new char[introMsg.Length];
         control = new char[controlMsg.Length];
         guide = new char[guideMsg.Length];
@@ -27,62 +42,102 @@ public class InfoController : MonoBehaviour
     }
 
     public void EnterInfoScreen() {
+        printCoroutine = PrintMsg();
+        // If already in info screen, clicking button again will exit
+        if (infoStart == true) {
+            ExitInfoScreen();
+            return;
+        }
+
         infoStart = true;
+        killPrint = false;
 
         // Turn all the stuff on
         darkOverlay.SetActive(true);
         background.SetActive(true);
-        StartCoroutine(PrintMsg());
+        StartCoroutine(printCoroutine);
+    }
+
+    public void ExitInfoScreen() {
+        infoStart = false;
+        killPrint = true;
+
+        // turn off all sprites
+        chickenSprite.enabled = false;
+        foxSprite.enabled = false;
+        mushroomSprite.enabled = false;
+        sunsliderSprite.enabled = false;
+        pondbuttonSprite.enabled = false;
+        fkcSprite.enabled = false;
+
+        StopCoroutine(printCoroutine);
+        darkOverlay.SetActive(false);
+        background.SetActive(false);
+        infoText.text = "";
     }
 
     char[] tempArr;
     IEnumerator PrintMsg() {
-        /**switch(msgNum) {
-            case 1: // INTRO
-                tempArr = intro;
-                break;
-            case 2: // CONTROLS
-                tempArr = control;
-                break;
-            case 3: // GUIDE
-                tempArr = guide;
-                break;
-        }
-
-        for (int i = 0; i < tempArr.Length; i++) {
-            StartCoroutine(WaitLetters());
-            infoText.text = infoText.text + tempArr[i];
-        }
-
-        if (msgNum == 1) {
-            StartCoroutine(PrintMsg(2));
-            yield return new WaitForSeconds(betweenSentencePause);
-        } else if (msgNum == 2) {
-            StartCoroutine(PrintMsg(3));
-            yield return new WaitForSeconds(betweenSentencePause);
-        } else {
-            infoStart = false;
-            yield return new WaitForSeconds(0.0f);
-        }*/
-
         for (int iIntro = 0; iIntro < intro.Length; iIntro++) {
+            if (killPrint) break;
             yield return new WaitForSeconds(betweenLettersPause);
             infoText.text = infoText.text + intro[iIntro];
+            switch (iIntro) {
+                case 31:
+                    chickenSprite.enabled = true;
+                    break;
+                case 41:
+                    foxSprite.enabled = true;
+                    break;
+                case 52:
+                    mushroomSprite.enabled = true;
+                    break;
+            }
+        }
+        if (killPrint) {
+            infoText.text = "";
+            yield break;
         }
         yield return new WaitForSeconds(betweenSentencePause);
+        chickenSprite.enabled = false;
+        foxSprite.enabled = false;
+        mushroomSprite.enabled = false;
         infoText.text = "";
 
         for (int iControl = 0; iControl < control.Length; iControl++) {
+            if (killPrint) break;
             yield return new WaitForSeconds(betweenLettersPause);
             infoText.text = infoText.text + control[iControl];
+            if (iControl == 3) {
+                sunsliderSprite.enabled = true;
+                pondbuttonSprite.enabled = true;
+            }
+        }
+        if (killPrint) {
+            infoText.text = "";
+            yield break;
         }
         yield return new WaitForSeconds(betweenSentencePause);
+        sunsliderSprite.enabled = false;
+        pondbuttonSprite.enabled = false;
         infoText.text = "";
         
         for (int iGuide = 0; iGuide < guide.Length; iGuide++) {
+            if (killPrint) break;
             yield return new WaitForSeconds(betweenLettersPause);
             infoText.text = infoText.text + guide[iGuide];
+            if (iGuide == 3) {
+                fkcSprite.enabled = true;
+            }
         }
+        if (killPrint) {
+            infoText.text = "";
+            yield break;
+        }
+        yield return new WaitForSeconds(betweenSentencePause + 3.0f);
+        fkcSprite.enabled = false;
+
         infoStart = false;
+        ExitInfoScreen();
     }
 }
