@@ -1,10 +1,14 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+
+using Random = UnityEngine.Random;
 
 public class SpawnControl : MonoBehaviour
 {
     [SerializeField] GameObject mobShroom, mobChick, mobFox;
+    float spawnX, spawnZ;
 
     // Spawn rates, will b controlled by script eventually
 
@@ -30,9 +34,9 @@ public class SpawnControl : MonoBehaviour
         numFox = 48;
 
         for (int x = 0; x < 3; x++) {
-            Instantiate(mobChick, new Vector3(Random.Range(-3.5f, 3.5f), -0.3f, Random.Range(-0.5f, -6.0f)), Quaternion.identity);
-            Instantiate(mobFox, new Vector3(Random.Range(-3.5f, 3.5f), -0.3f, Random.Range(-0.5f, -6.0f)), Quaternion.identity);
-            Instantiate(mobShroom, new Vector3(Random.Range(-3.5f, 3.5f), -0.3f, Random.Range(-0.5f, -6.0f)), Quaternion.identity);
+            Instantiate(mobChick, new Vector3(Random.Range(-3.5f, 3.5f), -0.53f, Random.Range(-3.17f, -6.0f)), Quaternion.identity);
+            Instantiate(mobFox, new Vector3(Random.Range(-3.5f, 3.5f), -0.34f, Random.Range(-3.17f, -6.0f)), Quaternion.identity);
+            Instantiate(mobShroom, new Vector3(Random.Range(-3.5f, 3.5f), -0.6f, Random.Range(-3.17f, -6.0f)), Quaternion.identity);
         }
 
         StartCoroutine(WaitRateController());
@@ -97,13 +101,25 @@ public class SpawnControl : MonoBehaviour
         StartCoroutine(SpawnDespawnCoroutine(mob, popIncr));
     }
 
+    public Tuple<float, float> generateCoords() {
+        float spawnX = Random.Range(-3.5f, 3.5f);
+        float spawnZ = 0.0f;
+        if (spawnX < 0.2f) { // if spawn within pond's x, bound, ensure not within z bound
+            spawnZ = Random.Range(-3.17f, -6.0f);
+        } else { // otherwise spawn wherever, larger Z range
+            spawnZ = Random.Range(-0.5f, -6.0f);
+        }
+        return Tuple.Create(spawnX, spawnZ);
+    }
+
     IEnumerator SpawnDespawnCoroutine(int mob, int popIncr) {
         //Debug.Log("Coroutine reached");
         switch(mob) {
             case 1:
                 if (popIncr >= 0) {
                     for (int i = 0; i < popIncr; i++) {
-                        Instantiate(mobShroom, new Vector3(Random.Range(-3.5f, 3.5f), -0.3f, Random.Range(-0.5f, -6.0f)), Quaternion.identity);
+                        (spawnX, spawnZ) = generateCoords();
+                        Instantiate(mobShroom, new Vector3(spawnX, -0.6f, spawnZ), Quaternion.identity);
                         yield return new WaitForSeconds(spawnerWait);
                     }
                 } else { // population is decreasing
@@ -116,8 +132,8 @@ public class SpawnControl : MonoBehaviour
             case 2:
                 if (popIncr >= 0) {
                     for (int i = 0; i < popIncr; i++) {
-                        //Debug.Log("SpawnDespawnCoroutine chicken");
-                        Instantiate(mobChick, new Vector3(Random.Range(-3.5f, 3.5f), -0.3f, Random.Range(-0.5f, -6.0f)), Quaternion.identity);
+                        (spawnX, spawnZ) = generateCoords();
+                        Instantiate(mobChick, new Vector3(spawnX, -0.53f, spawnZ), Quaternion.identity);
                         yield return new WaitForSeconds(spawnerWait);
                     }
                 } else { // population is decreasing
@@ -130,7 +146,8 @@ public class SpawnControl : MonoBehaviour
             case 3:
                 if (popIncr >= 0) {
                     for (int i = 0; i < popIncr; i++) {
-                        Instantiate(mobFox, new Vector3(Random.Range(-3.5f, 3.5f), -0.3f, Random.Range(-0.5f, -6.0f)), Quaternion.identity);
+                        (spawnX, spawnZ) = generateCoords();
+                        Instantiate(mobFox, new Vector3(spawnX, -0.34f, spawnZ), Quaternion.identity);
                         yield return new WaitForSeconds(spawnerWait);
                     }
                 } else { // population is decreasing
