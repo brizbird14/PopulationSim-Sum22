@@ -26,8 +26,12 @@ public class SpawnControl : MonoBehaviour
     [SerializeField] float spawnerWait;
 
     [SerializeField] RateControl rateController; // ONLY ref when turning on in beginning
+    [SerializeField] EnviroControl enviroController; // to check for pond to spawn around
 
     bool spawnPaused;
+
+    bool pondPresent; // checks from enviro control script
+    //GameObject pondDweller; // temp for checking if in pond
 
     void Start() {
         // Start each population at 3
@@ -106,9 +110,10 @@ public class SpawnControl : MonoBehaviour
     }
 
     public Tuple<float, float> generateCoords() {
+        pondPresent = enviroController.isPondOn();
         float spawnX = Random.Range(-3.5f, 3.5f);
         float spawnZ = 0.0f;
-        if (spawnX < 0.2f) { // if spawn within pond's x, bound, ensure not within z bound
+        if (spawnX < 0.2f && pondPresent) { // if spawn within pond's x, bound, ensure not within z bound
             spawnZ = Random.Range(-3.17f, -6.0f);
         } else { // otherwise spawn wherever, larger Z range
             spawnZ = Random.Range(-0.5f, -6.0f);

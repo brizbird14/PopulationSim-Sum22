@@ -19,6 +19,7 @@ public class EnviroControl : MonoBehaviour
 
         // Set pond activity
         pond.SetActive(true);
+        pondGrass.SetActive(false);
         pondOn = true;
         isPaused = false;
     }
@@ -33,15 +34,18 @@ public class EnviroControl : MonoBehaviour
 
     // Controlling pond appearance
     [SerializeField] GameObject pond;
+    [SerializeField] GameObject pondGrass; // fill area with grass if pond gone
     bool pondOn;
     public void TogglePond() {
         if (pondOn) {
             // Turn pond off
             pond.SetActive(false);
+            pondGrass.SetActive(true);
             pondOn = false;
         } else {
             // Turn pond on
             pond.SetActive(true);
+            pondGrass.SetActive(false);
             pondOn = true;
         }
         rateScript.UpdateCGrowth(lightSlider.value, pondOn);
@@ -65,6 +69,14 @@ public class EnviroControl : MonoBehaviour
             isPaused = true;
             rateScript.PauseUnpause(true);
             spawnScript.PlaySpawn(true);
+        }
+    }
+
+    public bool isPondOn() {
+        if (pondOn) {
+            return true;
+        } else {
+            return false;
         }
     }
 }
