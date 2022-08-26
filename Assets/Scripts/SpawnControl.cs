@@ -27,6 +27,8 @@ public class SpawnControl : MonoBehaviour
 
     [SerializeField] RateControl rateController; // ONLY ref when turning on in beginning
 
+    bool spawnPaused;
+
     void Start() {
         // Start each population at 3
         numShroom = 24;
@@ -98,7 +100,9 @@ public class SpawnControl : MonoBehaviour
     }
 
     public void SpawnDespawn(int mob, int popIncr) {
-        StartCoroutine(SpawnDespawnCoroutine(mob, popIncr));
+        if (!spawnPaused) {
+            StartCoroutine(SpawnDespawnCoroutine(mob, popIncr));
+        }
     }
 
     public Tuple<float, float> generateCoords() {
@@ -118,12 +122,14 @@ public class SpawnControl : MonoBehaviour
             case 1:
                 if (popIncr >= 0) {
                     for (int i = 0; i < popIncr; i++) {
+                        if (spawnPaused) break;
                         (spawnX, spawnZ) = generateCoords();
                         Instantiate(mobShroom, new Vector3(spawnX, -0.6f, spawnZ), Quaternion.identity);
                         yield return new WaitForSeconds(spawnerWait);
                     }
                 } else { // population is decreasing
                     for (int j = 0; j > popIncr; j--) {
+                        if (spawnPaused) break;
                         Destroy(GameObject.FindWithTag("MobShroom"));
                         yield return new WaitForSeconds(spawnerWait);
                     }
@@ -132,12 +138,14 @@ public class SpawnControl : MonoBehaviour
             case 2:
                 if (popIncr >= 0) {
                     for (int i = 0; i < popIncr; i++) {
+                        if (spawnPaused) break;
                         (spawnX, spawnZ) = generateCoords();
                         Instantiate(mobChick, new Vector3(spawnX, -0.53f, spawnZ), Quaternion.identity);
                         yield return new WaitForSeconds(spawnerWait);
                     }
                 } else { // population is decreasing
                     for (int j = 0; j > popIncr; j--) {
+                        if (spawnPaused) break;
                         Destroy(GameObject.FindWithTag("MobChick"));
                         yield return new WaitForSeconds(spawnerWait);
                     }
@@ -146,17 +154,24 @@ public class SpawnControl : MonoBehaviour
             case 3:
                 if (popIncr >= 0) {
                     for (int i = 0; i < popIncr; i++) {
+                        if (spawnPaused) break;
                         (spawnX, spawnZ) = generateCoords();
                         Instantiate(mobFox, new Vector3(spawnX, -0.34f, spawnZ), Quaternion.identity);
                         yield return new WaitForSeconds(spawnerWait);
                     }
                 } else { // population is decreasing
                     for (int j = 0; j > popIncr; j--) {
+                        if (spawnPaused) break;
                         Destroy(GameObject.FindWithTag("MobFox"));
                         yield return new WaitForSeconds(spawnerWait);
                     }
                 }
                 break;
         }
+        if (spawnPaused) yield break;
+    }
+
+    public void PlaySpawn (bool pause) {
+        spawnPaused = pause;
     }
 }

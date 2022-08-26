@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class EnviroControl : MonoBehaviour
 {
     [SerializeField] RateControl rateScript;
+    [SerializeField] SpawnControl spawnScript;
 
     public void Start() {
         // Set starting light intensity / brightness
@@ -59,9 +60,11 @@ public class EnviroControl : MonoBehaviour
         if (isPaused) {
             isPaused = false;
             rateScript.PauseUnpause(false);
+            spawnScript.PlaySpawn(false);
         } else {
             isPaused = true;
             rateScript.PauseUnpause(true);
+            spawnScript.PlaySpawn(true);
         }
     }
 }
