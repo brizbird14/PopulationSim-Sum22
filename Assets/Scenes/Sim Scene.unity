@@ -2075,7 +2075,7 @@ MonoBehaviour:
   numShroom: 0
   numChick: 0
   numFox: 0
-  spawnerWait: 0.5
+  spawnerWait: 0.3
   rateController: {fileID: 922253489}
   enviroController: {fileID: 983902713}
 --- !u!4 &922253488
