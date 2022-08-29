@@ -1,44 +1,36 @@
 # PopulationSim-Sum22
+Population Sim is designed to show a population models at play in a simulated environment. The player can interact with environmental factors like light and water to control the growth rate of chickens, which affects the other species accordingly.
 
-[*HEADER IMAGE HERE*]
+The simulation was programmed in Unity Game Engine with C#. It features 3D models made in Blender and 2D visual assets made in Procreate.
 
-Link to online build: [*INSERT LINK WHEN BROWSER VERSION BUILT*]
+<p align="center">
+<img src="https://github.com/brizbird14/PopulationSim-Sum22/blob/main/ReadmePics/popsim_gameplay_resize.gif?raw=true" width=600 align=center>
+</p>
 
-#### Populations with differential equations
+#### Simulating population models with differential equations
 
-In a recent mathematics course that I attended at Rutgers University, we discussed population models as a potential application for systems of differential equations. The goals of this project were to simulate interacting populations based off of models studied in class, and to further familiarize myself with C# and the Unity API.
+I recently took a maths course in which we discussed population models as an application for differential equations. These models featured equations where the growth/death rate of one population depended on the number of each species present.
+The goal for the Population Sim is to visualize these differential population models, as well as to further familiarize myself with C# and the Unity API, which I was using in a game-development club at Rutgers. By translating these equations into code, I could track population counts and re-calculate the dependent growth rates at each time interval.
 
-Tools used:
-* Unity (version 2021.3.4f1)
-* Blender for 3D visual assets
-* Procreate for 2D visual assets
+The simulation demonstrates a <b>predator-prey model</b>. For the purpose of the simulation, I also included a third species for more diversity, and made the coefficients in the relationship influenced by user-controlled factors.
 
+The math behind the simulation can be encompassed in the following equations:
 
-#### Simulation design
+<p align="center">
+<img src="https://github.com/brizbird14/PopulationSim-Sum22/blob/main/ReadmePics/popsimequations.png?raw=true" width=125 align=center>
+</p>
 
-The simulation features 3 populations: chickens, foxes, and mushrooms. The chicken and fox are representative of a **predator-prey relationship**, where the *chicken's death rrate realtes to the fox's birth rate.* The chicken's birth rate is influenced by user-controlled environmental factors, while the fox's death rate decides the presence of decomposers (mushrooms).
-The populations are related by the equations below, and the calculations to derive them may be found [*FILE LOC WHEN MATH CALCS POSTED*]
-
-[*INSERT FINAL EQ PICS HERE, along with small caption below explaining variables*]
-
-#### Code and Visuals
-
-The above equations were translated into code, and is used to re-calculate populations at each interval of 0.2sec using population counts from the previous interval. The "Spawn" in the game instantiates and destroys game objects that visually represent the number of each mob present, depending on whether their population is increasing or decreasing.
-The user can view information about the populations and interact with the simulation using UI elements:
-* User control over environmental factors that influence chicken's birth rate (light levels, water presence)
-* Pause/start button that pauses simulation
-* Access to an info tab with animations and pop-up text that explain the simulation
-* Graph that shows population counts of chickens (C) and foxes (F)
+* <i>C</i>, <i>F</i>, and <i>M</i> represent the chicken, fox, and mushroom population counts, respectively
+* <i>a</i>, <i>b</i>, <i>d</i>, and <i>e</i> are coefficients. The coefficient <i>a</i> is based on the user's environmental inputs.
+* For each species, the first term is the birth/growth rate, while the second term represents the death rate
 
 #### What I learned
 * Using Unity-specific tools such as Canvas and TextMeshPro to create interactable UI
-* Passing values between game objects by creating instances of custom classes
-* 
+* Creating custom classes for in-game objects to carry out functions and communicate with other objects
+* Using C# IEnumerator to carry out Coroutines in iterations
 
-#### Future improvements
-* Adjust math to cap fox population
+#### Challenges and future improvements
+* Using the predator-prey models discussed in class did not allow for the inclusion of a carrying capacity. Thus, in some situations, the simulation would not "cap" a population and allow it to increase infinitely.
+* Show equilibrium points at which the population should balance out on graph
 * Allow user to change speed of simulation
-
-#### References
-
-Textbook from maths course -- Charnley, M. (2021). Differential Equations An Introduction for Engineers. 
+* Program mobs to move around and interact
